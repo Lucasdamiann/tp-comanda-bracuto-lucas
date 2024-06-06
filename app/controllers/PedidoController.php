@@ -8,21 +8,16 @@ class PedidoController extends Pedido implements IApiUsable
     {
         $parametros = $request->getParsedBody();
 
+        $cliente = $parametros['cliente'];
         $estado = $parametros['estado'];
-        $pedido = $parametros['pedido'];
         $numeroPedido = $parametros['numeroPedido'];
-        $tiempoEstimado = $parametros['tiempoEstimado'];
         $codigoMesa = $parametros['codigoMesa'];
-        $ventas = $parametros['ventas'];
 
-        // Creamos el Pedido
         $ped = new Pedido();
+        $ped->cliente = $cliente;
         $ped->estado = $estado;
-        $ped->pedido = $pedido;
         $ped->numeroPedido = $numeroPedido;
-        $ped->tiempoEstimado = $tiempoEstimado;
         $ped->codigoMesa = $codigoMesa;
-        $ped->ventas = $ventas;
         $ped->id = $ped->crearPedido();
 
         $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
@@ -34,7 +29,6 @@ class PedidoController extends Pedido implements IApiUsable
 
     public function TraerUno($request, $response, $args)
     {
-        // Buscamos Pedido por estado
         $ped = $args['estado'];
         $pedido = Pedido::obtenerPedido($ped);
         $payload = json_encode($pedido);
@@ -57,15 +51,13 @@ class PedidoController extends Pedido implements IApiUsable
     public function ModificarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-
+        
+        $cliente = $parametros['cliente'];
         $estado = $parametros['estado'];
-        $pedido = $parametros['pedido'];
         $numeroPedido = $parametros['numeroPedido'];
-        $tiempoEstimado = $parametros['tiempoEstimado'];
         $codigoMesa = $parametros['codigoMesa'];
-        $ventas = $parametros['ventas'];
         $id = $parametros['id'];
-        Pedido::modificarPedido($estado, $pedido, $numeroPedido, $tiempoEstimado, $codigoMesa, $ventas, $id);
+        Pedido::modificarPedido($estado, $cliente, $numeroPedido, $codigoMesa, $id);
 
         $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
 

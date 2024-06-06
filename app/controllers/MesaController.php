@@ -9,12 +9,12 @@ class MesaController extends Mesa implements IApiUsable
     $parametros = $request->getParsedBody();
 
     $estado = $parametros['estado'];
-    $numeroMesa = $parametros['numeroMesa'];
+    $codigoMesa = $parametros['codigoMesa'];
 
     // Creamos el Mesa
     $mesa = new Mesa();
     $mesa->estado = $estado;
-    $mesa->numeroMesa = $numeroMesa;
+    $mesa->codigoMesa = $codigoMesa;
     $mesa->id = $mesa->crearMesa();
 
     $payload = json_encode(array("mensaje" => "Mesa creado con exito"));
@@ -51,9 +51,9 @@ class MesaController extends Mesa implements IApiUsable
     $parametros = $request->getParsedBody();
 
     $estado = $parametros['estado'];
-    $numeroMesa = $parametros['numeroMesa'];
+    $codigoMesa = $parametros['codigoMesa'];
     $id = $parametros['mesaId'];
-    Mesa::modificarMesa($estado, $numeroMesa, $id);
+    Mesa::modificarMesa($estado, $codigoMesa, $id);
 
     $payload = json_encode(array("mensaje" => "Mesa modificado con exito"));
 

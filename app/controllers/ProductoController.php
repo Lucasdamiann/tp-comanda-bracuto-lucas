@@ -8,7 +8,6 @@ class ProductoController extends Producto implements IApiUsable
   {
     $parametros = $request->getParsedBody();
 
-    $nombre = $parametros['nombre'];
     $tipo = $parametros['tipo'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
@@ -17,7 +16,6 @@ class ProductoController extends Producto implements IApiUsable
     
     // Creamos el Producto
     $prd = new Producto();
-    $prd->nombre = $nombre;
     $prd->tipo = $tipo;
     $prd->sector = $sector;
     $prd->precio = $precio;
@@ -35,8 +33,7 @@ class ProductoController extends Producto implements IApiUsable
 
   public function TraerUno($request, $response, $args)
   {
-    // Buscamos Producto por nombre
-    $prd = $args['nombre'];
+    $prd = $args['tipo'];
     $producto = Producto::obtenerProducto($prd);
     $payload = json_encode($producto);
 
@@ -59,14 +56,14 @@ class ProductoController extends Producto implements IApiUsable
   {
     $parametros = $request->getParsedBody();
 
-    $nombre = $parametros['nombre'];
     $tipo = $parametros['tipo'];
+    $numeroPedido = $parametros['numeroPedido'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
     $tiempoEstimado = $parametros['tiempoEstimado'];
     $estado = $parametros['estado'];
     $id = $parametros['id'];
-    Producto::modificarProducto($nombre, $tipo, $sector, $precio, $tiempoEstimado, $estado, $id);
+    Producto::modificarProducto($tipo, $numeroPedido, $sector, $precio, $tiempoEstimado, $estado, $id);
 
     $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
 

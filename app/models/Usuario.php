@@ -1,13 +1,13 @@
 <?php
 class Usuario
 {
-    protected $id;
-    protected $usuario;
-    protected $clave;
-    protected $sector;
-    protected $fechaLogIn;
-    protected $estado;
-    protected $fechaBaja;
+    public $id;
+    public $usuario;
+    public $clave;
+    public $sector;
+    public $fechaLogIn;
+    public $estado;
+    public $fechaBaja;
 
     public function crearUsuario()
     {
@@ -33,11 +33,11 @@ class Usuario
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
-    public static function obtenerUsuario($usuario)
+    public static function obtenerUsuario($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, fechaLogIn, estado FROM usuarios WHERE usuario = :usuario");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, fechaLogIn, estado FROM usuarios WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
 
         return $consulta->fetchObject('Usuario');
@@ -49,10 +49,9 @@ class Usuario
         $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, sector = :sector, estado = :estado WHERE id = :id");
         $consulta->bindValue(':id', $usuario->id, PDO::PARAM_INT);
         $consulta->bindValue(':usuario', $usuario->usuario, PDO::PARAM_STR);
-        $clave = password_hash($usuario->clave, PASSWORD_DEFAULT);
-        $consulta->bindValue(':clave', $clave);
+        $consulta->bindValue(':clave', password_hash($usuario->clave, PASSWORD_DEFAULT));
         $consulta->bindValue(':sector', $usuario->sector, PDO::PARAM_STR);
-        $consulta->bindValue(':estado', $usuario->estado, PDO::PARAM_STR); //estado se modifica aca o aparte?
+        $consulta->bindValue(':estado', $usuario->estado, PDO::PARAM_STR); 
         $consulta->execute();
     }
 

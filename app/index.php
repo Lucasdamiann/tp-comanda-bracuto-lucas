@@ -14,24 +14,10 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
 require __DIR__ . '/../vendor/autoload.php';
-// require_once './middlewares/Logger.php';
 
-
-// Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 $app = AppFactory::create();
-
-// $app->get('/hello', function ($request, $response, array $args) {
-// 		$response->getBody()->write("Funciona!");
-// return $response;
-// });
-
-// $app->get("/test", function(Request $request, Response $response, array $args){
-//     $params = $request->getQueryParams();
-//     $response->getBody()->write(json_encode($params));
-//     return $response;
-// });
 
 $app->group("/Mesa", function (RouteCollectorProxy $group) {
     $group->get("[/]", \MesaController::class . ':TraerTodos');
@@ -56,30 +42,10 @@ $app->group("/Producto", function (RouteCollectorProxy $group) {
 });
 $app->group("/Usuario", function (RouteCollectorProxy $group) {
     $group->get("[/]", \UsuarioController::class . ':TraerTodos');
-    $group->get("/Usuario/{id}", \UsuarioController::class . ':TraerUno');
+    $group->get("/{id}", \UsuarioController::class . ':TraerUno');
     $group->post("[/]", \UsuarioController::class . ':CargarUno');
-    $group->put("/Usuario/{id}", \UsuarioController::class . ':ModificarUno');
-    $group->delete("/Usuario/{id}", \UsuarioController::class . ':BorrarUno');
+    $group->put("/{id}", \UsuarioController::class . ':ModificarUno');
+    $group->delete("/{id}", \UsuarioController::class . ':BorrarUno');
 });
-// $app->get("/usuarios", function ($request, $response, array $args)
-// {
-//     //obtener usuarios
-// });
-// $app->get("/usuarios/{id}", function ($request, $response, array $args)
-// {
-//     //obtener usuario por id
-// });
-// $app->post("/usuarios", function ($request, $response, array $args)
-// {
-//     //crear usuario
-// });
-// $app->put("/usuarios/{id}", function ($request, $response, array $args)
-// {
-//     //actualizar un usuario por id
-// });
-// $app->delete("/usuarios/{id}", function ($request, $response, array $args)
-// {
-//     //borrar usuario por id
-// });
 
 $app->run();

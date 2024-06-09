@@ -1,10 +1,10 @@
 <?php
 class Mesa
 {
-    protected $id;
-    protected $estado;
-    protected $codigoMesa;
-    protected $fechaBaja;
+    public $id;
+    public $estado;
+    public $codigoMesa;
+    public $fechaBaja;
 
     public function crearMesa()
     {
@@ -46,22 +46,22 @@ class Mesa
         return $consulta->fetchObject('Mesa');
     }
 
-    public static function modificarMesa($estado, $codigoMesa, $mesaId)
+    public static function modificarMesa($mesa)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, codigoMesa = :codigoMesa WHERE id = :id");
-        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
-        $consulta->bindValue(':codigoMesa', $codigoMesa, PDO::PARAM_STR);
-        $consulta->bindValue(':id', $mesaId, PDO::PARAM_INT);
+        $consulta->bindValue(':estado', $mesa->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':codigoMesa', $mesa->codigoMesa, PDO::PARAM_STR);
+        $consulta->bindValue(':id', $mesa->id, PDO::PARAM_INT);
         $consulta->execute();
     }
 
-    public static function borrarMesa($mesaId)
+    public static function borrarMesa($id)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET fechaBaja = :fechaBaja WHERE id = :id");
         $fecha = new DateTime(date("d-m-Y"));
-        $consulta->bindValue(':id', $mesaId, PDO::PARAM_INT);
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
         $consulta->execute();
     }

@@ -11,7 +11,6 @@ class MesaController extends Mesa implements IApiUsable
     $estado = $parametros['estado'];
     $codigoMesa = $parametros['codigoMesa'];
 
-    // Creamos el Mesa
     $mesa = new Mesa();
     $mesa->estado = $estado;
     $mesa->codigoMesa = $codigoMesa;
@@ -50,13 +49,18 @@ class MesaController extends Mesa implements IApiUsable
   {
     $parametros = $request->getParsedBody();
 
+    $id = $args['id'];
     $estado = $parametros['estado'];
     $codigoMesa = $parametros['codigoMesa'];
-    $id = $parametros['mesaId'];
-    Mesa::modificarMesa($estado, $codigoMesa, $id);
-
-    $payload = json_encode(array("mensaje" => "Mesa modificado con exito"));
-
+    $mesaMod = Mesa::obtenerMesa($id);
+    if($mesaMod !== NULL && $id !== NULL && $estado !== NULL && $codigoMesa !== NULL){
+      $mesaMod->estado = $estado;
+      $mesaMod->codigoMesa = $codigoMesa;
+      Mesa::modificarMesa($estado, $codigoMesa, $id);
+      $payload = json_encode(array("mensaje" => "Mesa modificado con exito"));
+    }else{
+      $payload = json_encode(array("mensaje" => "Mesa no se pudo modificar"));
+    }
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -64,9 +68,7 @@ class MesaController extends Mesa implements IApiUsable
 
   public function BorrarUno($request, $response, $args)
   {
-    $parametros = $request->getParsedBody();
-
-    $id = $parametros['mesaId'];
+    $id = $args['id'];
     Mesa::borrarMesa($id);
 
     $payload = json_encode(array("mensaje" => "Mesa borrado con exito"));

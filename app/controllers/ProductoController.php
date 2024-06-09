@@ -33,7 +33,7 @@ class ProductoController extends Producto implements IApiUsable
 
   public function TraerUno($request, $response, $args)
   {
-    $prd = $args['tipo'];
+    $prd = $args['id'];
     $producto = Producto::obtenerProducto($prd);
     $payload = json_encode($producto);
 
@@ -56,17 +56,27 @@ class ProductoController extends Producto implements IApiUsable
   {
     $parametros = $request->getParsedBody();
 
+    $id = $args['id'];
     $tipo = $parametros['tipo'];
     $numeroPedido = $parametros['numeroPedido'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
     $tiempoEstimado = $parametros['tiempoEstimado'];
     $estado = $parametros['estado'];
-    $id = $parametros['id'];
-    Producto::modificarProducto($tipo, $numeroPedido, $sector, $precio, $tiempoEstimado, $estado, $id);
-
-    $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
-
+    $prodMod = Producto::obtenerProducto($id);
+    if ($prodMod !== NULL && $id !== NULL && $tipo !== NULL && $numeroPedido !== NULL && $sector !== NULL && $precio !== NULL && $tiempoEstimado !== NULL && $estado !== NULL) {
+      $prodMod->tipo = $tipo;
+      $prodMod->tipo = $numeroPedido;
+      $prodMod->tipo = $sector;
+      $prodMod->tipo = $precio;
+      $prodMod->tipo = $tiempoEstimado;
+      $prodMod->tipo = $estado;
+      Producto::modificarProducto($id);
+      $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
+    }else{
+      
+      $payload = json_encode(array("mensaje" => "Producto no se pudo modificar"));
+    }
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -74,9 +84,7 @@ class ProductoController extends Producto implements IApiUsable
 
   public function BorrarUno($request, $response, $args)
   {
-    $parametros = $request->getParsedBody();
-
-    $id = $parametros['productoId'];
+    $id = $args['id'];
     Producto::borrarProducto($id);
 
     $payload = json_encode(array("mensaje" => "Producto borrado con exito"));

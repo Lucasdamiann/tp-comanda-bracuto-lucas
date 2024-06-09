@@ -1,4 +1,5 @@
 <?php
+
 require_once './models/Usuario.php';
 require_once './interfaces/IApiUsable.php';
 
@@ -12,7 +13,7 @@ class UsuarioController extends Usuario implements IApiUsable
     $clave = $parametros['clave'];
     $sector = $parametros['sector'];
     $estado = $parametros['estado'];
-
+    
     // Creamos el usuario
     $usr = new Usuario();
     $usr->usuario = $usuario;
@@ -30,9 +31,9 @@ class UsuarioController extends Usuario implements IApiUsable
 
   public function TraerUno($request, $response, $args)
   {
-    $usr = $args['usuario'];
-    $usuario = Usuario::obtenerUsuario($usr);
-    $payload = json_encode($usuario);
+    $usr = $args['id'];
+    $usuarioGet = Usuario::obtenerUsuario($usr);
+    $payload = json_encode(array("usuario: " => $usuarioGet));
 
     $response->getBody()->write($payload);
     return $response
@@ -52,16 +53,26 @@ class UsuarioController extends Usuario implements IApiUsable
   public function ModificarUno($request, $response, $args)
   {
     $parametros = $request->getParsedBody();
-
-    $usuario = $parametros['usuario'];
-    $clave = $parametros['clave'];
-    $sector = $parametros['sector'];
-    $estado = $parametros['estado'];
-    $id = $parametros['usuarioId'];
-    Usuario::modificarUsuario($usuario, $clave, $sector, $estado, $id,);
-
-    $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
-
+    var_dump($parametros);
+    $id = $args['id'];
+    $usuario = $parametros["usuario"];
+    $clave = $parametros["clave"];
+    $sector = $parametros["sector"];
+    $estado = $parametros["estado"];
+    // var_dump($usuario);
+    // var_dump($sector);
+    // var_dump($estado);
+    $usrMod = Usuario::obtenerUsuario($id);
+    if ($usrMod !== NULL && $id !== NULL && $usuario !== NULL && $clave !== NULL && $sector !== NULL && $estado !== NULL) {
+      $usrMod->usuario = $usuario;
+      $usrMod->clave = $clave;
+      $usrMod->sector = $sector;
+      $usrMod->estado = $estado;
+      Usuario::modificarUsuario($usrMod);
+      $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
+    } else {
+      $payload = json_encode(array("mensaje" => "Usuario no se pudo modificar"));
+    }
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -69,9 +80,7 @@ class UsuarioController extends Usuario implements IApiUsable
 
   public function BorrarUno($request, $response, $args)
   {
-    $parametros = $request->getParsedBody();
-
-    $id = $parametros['usuarioId'];
+    $id = $args['id'];
     Usuario::borrarUsuario($id);
 
     $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));

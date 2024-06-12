@@ -1,0 +1,898 @@
+{
+	"info": {
+		"_postman_id": "20ac7e2e-1770-4de3-9d83-7b9becf99e16",
+		"name": "Tp-Comanda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34175671"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "ObtenerUsuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/3",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AltaUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "Zeus",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "ZZeus123",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "barra",
+									"type": "text"
+								},
+								{
+									"key": "cargo",
+									"value": "mozo",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "activo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUsuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosUsuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarUsuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "asdas123",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "testing",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "unido",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/11",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "AltaProducto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "Honey",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "Cerveceria",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "4000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Producto/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProducto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Producto/3",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								"3"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerProducto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Producto/11",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosProducto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Producto/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Producto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "AltaPedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "mimi",
+									"type": "text"
+								},
+								{
+									"key": "idMesa",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/6",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"6"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/6",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarPedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "numeroPedido",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idMesa",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AltaFotoPedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/G:/Lucas/images.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/Foto/9",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"Foto",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductosPedidos",
+			"item": [
+				{
+					"name": "AltaProductosPedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "idProducto",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "idPedido",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProductosPedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerProductosPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosProductosPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarProductosPedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "numeroPedido",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idMesa",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "AltaMesa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "estado",
+									"value": "cerrada",
+									"type": "text"
+								},
+								{
+									"key": "codigoMesa",
+									"value": "M0009",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMesa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/3",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"3"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/11",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosMesa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarMesa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Producto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

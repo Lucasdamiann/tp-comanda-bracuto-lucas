@@ -6,20 +6,30 @@ class Pedido
     public $numeroPedido;
     public $idMesa;
     public $estado;
+    public $foto;
     public $fechaBaja;
 
     public function crearPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (cliente, numeroPedido, idMesa, estado) VALUES (:cliente, :numeroPedido, :idMesa, :estado)");
-        $numero = Mesa::GenerarCodigoAlfanumericoAleatorio();
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (cliente, numeroPedido, idMesa) VALUES (:cliente, :numeroPedido, :idMesa)");
+        $numero = self::GenerarCodigoAlfanumericoAleatorio();
         $consulta->bindValue(':cliente', $this->cliente, PDO::PARAM_STR);
-        $consulta->bindValue(':numeroPedido', $numero, PDO::PARAM_INT);
-        $consulta->bindValue(':idMesa', $this->id, PDO::PARAM_INT);
-        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':numeroPedido', $numero, PDO::PARAM_STR);
+        $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
+    }
+
+    public static function GenerarCodigoAlfanumericoAleatorio($cantidad = 5)
+    {
+        $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $codigo = '';
+        for ($i = 0; $i < $cantidad; $i++) {
+            $codigo .= $caracteres[rand(0, strlen($caracteres) - 1)];
+        }
+        return $codigo;
     }
 
     public static function obtenerTodos()
@@ -31,11 +41,11 @@ class Pedido
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
 
-    public static function obtenerPedido($numeroPedido)
+    public static function obtenerPedido($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, cliente, numeroPedido, idMesa, estado FROM Pedidos WHERE numeroPedido = :numeroPedido");
-        $consulta->bindValue(':numeroPedido', $numeroPedido, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, cliente, numeroPedido, idMesa, estado, fechaBaja FROM Pedidos WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
         return $consulta->fetchObject('Pedido');
@@ -60,6 +70,15 @@ class Pedido
         $fecha = new DateTime(date("d-m-Y"));
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
+        $consulta->execute();
+    }
+
+    public static function ModificarFoto($id, $foto)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET foto = :foto WHERE id = :id');
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->bindValue(':foto', $foto, PDO::PARAM_INT);
         $consulta->execute();
     }
 }

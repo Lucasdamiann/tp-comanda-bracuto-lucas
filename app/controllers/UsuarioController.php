@@ -8,10 +8,10 @@ class UsuarioController extends Usuario implements IApiUsable
   public function CargarUno($request, $response, $args)
   {
     $parametros = $request->getParsedBody();
-
     $usuario = $parametros['usuario'];
     $clave = $parametros['clave'];
     $sector = $parametros['sector'];
+    $cargo = $parametros['cargo'];
     $estado = $parametros['estado'];
     
     // Creamos el usuario
@@ -19,6 +19,7 @@ class UsuarioController extends Usuario implements IApiUsable
     $usr->usuario = $usuario;
     $usr->clave = $clave;
     $usr->sector = $sector;
+    $usr->cargo = $cargo;
     $usr->estado = $estado;
     $usr->id = $usr->crearUsuario();
 
@@ -58,6 +59,7 @@ class UsuarioController extends Usuario implements IApiUsable
     $usuario = $parametros["usuario"];
     $clave = $parametros["clave"];
     $sector = $parametros["sector"];
+    $cargo = $parametros["cargo"];
     $estado = $parametros["estado"];
     // var_dump($usuario);
     // var_dump($sector);
@@ -67,11 +69,12 @@ class UsuarioController extends Usuario implements IApiUsable
       $usrMod->usuario = $usuario;
       $usrMod->clave = $clave;
       $usrMod->sector = $sector;
+      $usrMod->cargo = $cargo;
       $usrMod->estado = $estado;
       Usuario::modificarUsuario($usrMod);
       $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
     } else {
-      $payload = json_encode(array("mensaje" => "Usuario no se pudo modificar"));
+      $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar el Usuario"));
     }
     $response->getBody()->write($payload);
     return $response

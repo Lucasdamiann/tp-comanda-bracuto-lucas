@@ -11,21 +11,14 @@ class ProductoController extends Producto implements IApiUsable
     $tipo = $parametros['tipo'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
-    $tiempoEstimado = $parametros['tiempoEstimado'];
-    $estado = $parametros['estado'];
-    
     // Creamos el Producto
     $prd = new Producto();
     $prd->tipo = $tipo;
     $prd->sector = $sector;
     $prd->precio = $precio;
-    $prd->tiempoEstimado = $tiempoEstimado;
-    $prd->estado = $estado;
     $prd->id = $prd->crearProducto();
 
-
     $payload = json_encode(array("mensaje" => "Producto creado con exito"));
-
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -58,15 +51,13 @@ class ProductoController extends Producto implements IApiUsable
 
     $id = $args['id'];
     $tipo = $parametros['tipo'];
-    $numeroPedido = $parametros['numeroPedido'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
     $tiempoEstimado = $parametros['tiempoEstimado'];
     $estado = $parametros['estado'];
     $prodMod = Producto::obtenerProducto($id);
-    if ($prodMod !== NULL && $id !== NULL && $tipo !== NULL && $numeroPedido !== NULL && $sector !== NULL && $precio !== NULL && $tiempoEstimado !== NULL && $estado !== NULL) {
+    if ($prodMod !== NULL && $id !== NULL && $tipo !== NULL && $sector !== NULL && $precio !== NULL && $tiempoEstimado !== NULL && $estado !== NULL) {
       $prodMod->tipo = $tipo;
-      $prodMod->tipo = $numeroPedido;
       $prodMod->tipo = $sector;
       $prodMod->tipo = $precio;
       $prodMod->tipo = $tiempoEstimado;
@@ -75,7 +66,7 @@ class ProductoController extends Producto implements IApiUsable
       $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
     }else{
       
-      $payload = json_encode(array("mensaje" => "Producto no se pudo modificar"));
+      $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar el Producto"));
     }
     $response->getBody()->write($payload);
     return $response

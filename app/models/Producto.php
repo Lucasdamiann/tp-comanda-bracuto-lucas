@@ -3,7 +3,6 @@ class Producto
 {
     public $id;
     public $tipo;
-    public $idPedido;
     public $sector;
     public $precio;
     public $tiempoEstimado;
@@ -13,13 +12,10 @@ class Producto
     public function crearProducto()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO productos (tipo, idPedido, sector, precio, tiempoEstimado, estado) VALUES (:tipo, :idPedido, :sector, :precio, :tiempoEstimado, :estado)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO productos (tipo, sector, precio) VALUES (:tipo, :sector, :precio)");
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':idPedido', $this->idPedido, PDO::PARAM_INT);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
         $consulta->bindValue(':precio', $this->precio, PDO::PARAM_INT);
-        $consulta->bindValue(':tiempoEstimado', $this->tiempoEstimado, PDO::PARAM_INT);
-        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -37,8 +33,8 @@ class Producto
     public static function obtenerProducto($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, idPedido, sector, precio, tiempoEstimado, estado FROM productos WHERE id = :id");
-        $consulta->bindValue(':id', $id, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, sector, precio, tiempoEstimado, estado FROM productos WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
         return $consulta->fetchObject('Producto');
@@ -47,7 +43,7 @@ class Producto
     public static function modificarProducto($producto)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET tipo = :tipo, idPedido = :idPedido, sector = :sector, precio = :precio, tiempoEstimado = :tiempoEstimado, estado = :estado WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET tipo = :tipo, sector = :sector, precio = :precio, tiempoEstimado = :tiempoEstimado, estado = :estado WHERE id = :id");
         $consulta->bindValue(':tipo', $producto->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $producto->sector, PDO::PARAM_STR);
         $consulta->bindValue(':precio', $producto->precio, PDO::PARAM_INT);

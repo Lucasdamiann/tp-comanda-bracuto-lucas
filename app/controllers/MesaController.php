@@ -26,7 +26,7 @@ class MesaController extends Mesa implements IApiUsable
   public function TraerUno($request, $response, $args)
   {
     // Buscamos Mesa por nombre
-    $mesa = $args['estado'];
+    $mesa = $args['id'];
     $mesa = Mesa::obtenerMesa($mesa);
     $payload = json_encode($mesa);
 
@@ -59,7 +59,7 @@ class MesaController extends Mesa implements IApiUsable
       Mesa::modificarMesa($estado, $codigoMesa, $id);
       $payload = json_encode(array("mensaje" => "Mesa modificado con exito"));
     }else{
-      $payload = json_encode(array("mensaje" => "Mesa no se pudo modificar"));
+      $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar la Mesa"));
     }
     $response->getBody()->write($payload);
     return $response
@@ -71,7 +71,7 @@ class MesaController extends Mesa implements IApiUsable
     $id = $args['id'];
     Mesa::borrarMesa($id);
 
-    $payload = json_encode(array("mensaje" => "Mesa borrado con exito"));
+    $payload = json_encode(array("mensaje" => "Mesa borrada con exito"));
 
     $response->getBody()->write($payload);
     return $response

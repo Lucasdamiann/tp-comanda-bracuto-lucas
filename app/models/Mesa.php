@@ -10,21 +10,12 @@ class Mesa
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO mesas (estado, codigoMesa) VALUES (:estado, :codigoMesa)");
-        $codigo = self::GenerarCodigoAlfanumericoAleatorio();
+    
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
-        $consulta->bindValue(':codigoMesa', $codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':codigoMesa', $this->codigoMesa, PDO::PARAM_INT);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
-    }
-
-    public static function GenerarCodigoAlfanumericoAleatorio($cantidad = 5){
-        $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $codigo = '';
-        for ($i = 0; $i < $cantidad; $i++) {
-            $codigo .= $caracteres[rand(0, strlen($caracteres) - 1)];
-        }
-        return $codigo;
     }
 
     public static function obtenerTodos()
@@ -36,11 +27,11 @@ class Mesa
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
     }
 
-    public static function obtenerMesa($codigoMesa)
+    public static function obtenerMesa($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, estado, codigoMesa FROM mesas WHERE codigoMesa = :codigoMesa");
-        $consulta->bindValue(':codigoMesa', $codigoMesa, PDO::PARAM_INT);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, estado, codigoMesa FROM mesas WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
         return $consulta->fetchObject('Mesa');

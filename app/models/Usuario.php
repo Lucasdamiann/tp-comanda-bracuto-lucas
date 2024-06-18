@@ -54,7 +54,7 @@ class Usuario
         $consulta->bindValue(':clave', password_hash($usuario->clave, PASSWORD_DEFAULT));
         $consulta->bindValue(':sector', $usuario->sector, PDO::PARAM_STR);
         $consulta->bindValue(':cargo', $usuario->cargo, PDO::PARAM_STR);
-        $consulta->bindValue(':estado', $usuario->estado, PDO::PARAM_STR); 
+        $consulta->bindValue(':estado', $usuario->estado, PDO::PARAM_STR);
         $consulta->execute();
     }
 
@@ -66,5 +66,39 @@ class Usuario
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
         $consulta->execute();
+    }
+
+    public static function obtenerUsuarioPorUsuarioYClave($usuario, $clave)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $claveHash = self::obtenerClavePorUsuario($usuario);
+        if($claveHash && password_verify($clave, $claveHash)){
+            $consulta = $objAccesoDato->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaLogIn, estado FROM usuarios WHERE usuario = :usuario");
+            $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+            $consulta->execute();
+            return $consulta->fetchObject('Usuario');
+        }
+    }
+
+    public static function obtenerClavePorUsuario($usuario)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("SELECT clave FROM usuarios WHERE usuario = :usuario");
+        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta->execute();
+        $resultado = $consulta->fetch();
+
+        return $resultado ? $resultado["clave"] : null;
+    }
+
+    public static function obtenerCargoPorUsuario($usuario)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("SELECT cargo FROM usuarios WHERE usuario = :usuario");
+        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta->execute();
+        $resultado = $consulta->fetch();
+
+        return $resultado ? $resultado["cargo"] : null;
     }
 }

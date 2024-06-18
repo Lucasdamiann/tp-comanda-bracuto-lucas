@@ -53,19 +53,17 @@ class ProductoController extends Producto implements IApiUsable
     $tipo = $parametros['tipo'];
     $sector = $parametros['sector'];
     $precio = $parametros['precio'];
-    $tiempoEstimado = $parametros['tiempoEstimado'];
     $estado = $parametros['estado'];
     $prodMod = Producto::obtenerProducto($id);
-    if ($prodMod !== NULL && $id !== NULL && $tipo !== NULL && $sector !== NULL && $precio !== NULL && $tiempoEstimado !== NULL && $estado !== NULL) {
+    if ($prodMod !== NULL && $id !== NULL && $tipo !== NULL && $sector !== NULL && $precio !== NULL && $estado !== NULL) {
       $prodMod->tipo = $tipo;
       $prodMod->tipo = $sector;
       $prodMod->tipo = $precio;
-      $prodMod->tipo = $tiempoEstimado;
       $prodMod->tipo = $estado;
       Producto::modificarProducto($id);
       $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
-    }else{
-      
+    } else {
+
       $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar el Producto"));
     }
     $response->getBody()->write($payload);

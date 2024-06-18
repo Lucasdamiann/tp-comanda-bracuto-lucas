@@ -45,11 +45,30 @@ class ProductosPedidosController extends ProductosPedidos implements IApiUsable
     $idPedido = $parametros['idPedido'];
     $idProducto = $parametros['idProducto'];
     $pedidoMod = ProductosPedidos::obtenerProductosPedidos($id);
-    if($pedidoMod !== NULL && $idPedido !== NULL && $idProducto !==NULL && $id !== NULL){
+    if($pedidoMod !== NULL && $idPedido !== NULL && $idProducto !== NULL && $id !== NULL){
       $pedidoMod->idPedido = $idPedido;
       $pedidoMod->idProducto = $idProducto;
       ProductosPedidos::modificarProductosPedidos($pedidoMod);
       $payload = json_encode(array("mensaje" => "ProductosPedidos modificados con exito"));
+    }else{
+      $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar ProductosPedidos"));
+    }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function ModificarEstadoYTiempoEstimado($request, $response, $args)
+  {
+    $id = $args['id'];
+    $parametros = $request->getParsedBody();
+    $estado = $parametros['estado'];
+    $estado = $parametros['tiempoEstimado'];
+    $pedidoMod = ProductosPedidos::obtenerProductosPedidos($id);
+    if($pedidoMod !== NULL && $estado !== NULL && $id !== NULL){
+      $pedidoMod->estado = $estado;
+      ProductosPedidos::modificarProductosPedidos($pedidoMod);
+      $payload = json_encode(array("mensaje" => "Estado de ProductosPedidos modificado con exito"));
     }else{
       $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar ProductosPedidos"));
     }

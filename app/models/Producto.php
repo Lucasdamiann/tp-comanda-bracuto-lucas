@@ -5,7 +5,6 @@ class Producto
     public $tipo;
     public $sector;
     public $precio;
-    public $tiempoEstimado;
     public $estado;
     public $fechaBaja;
 
@@ -24,7 +23,7 @@ class Producto
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, sector, precio, tiempoEstimado, estado FROM productos");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, sector, precio, estado FROM productos");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
@@ -33,7 +32,7 @@ class Producto
     public static function obtenerProducto($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, sector, precio, tiempoEstimado, estado FROM productos WHERE id = :id");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, sector, precio, estado FROM productos WHERE id = :id");
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
@@ -43,11 +42,10 @@ class Producto
     public static function modificarProducto($producto)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET tipo = :tipo, sector = :sector, precio = :precio, tiempoEstimado = :tiempoEstimado, estado = :estado WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET tipo = :tipo, sector = :sector, precio = :precio, estado = :estado WHERE id = :id");
         $consulta->bindValue(':tipo', $producto->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $producto->sector, PDO::PARAM_STR);
         $consulta->bindValue(':precio', $producto->precio, PDO::PARAM_INT);
-        $consulta->bindValue(':tiempoEstimado', $producto->tiempoEstimado, PDO::PARAM_INT);
         $consulta->bindValue(':estado', $producto->estado, PDO::PARAM_STR);
         $consulta->bindValue(':id', $producto->id, PDO::PARAM_INT);
         $consulta->execute();

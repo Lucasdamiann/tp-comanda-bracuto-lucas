@@ -54,16 +54,12 @@ class UsuarioController extends Usuario implements IApiUsable
   public function ModificarUno($request, $response, $args)
   {
     $parametros = $request->getParsedBody();
-    var_dump($parametros);
     $id = $args['id'];
     $usuario = $parametros["usuario"];
     $clave = $parametros["clave"];
     $sector = $parametros["sector"];
     $cargo = $parametros["cargo"];
     $estado = $parametros["estado"];
-    // var_dump($usuario);
-    // var_dump($sector);
-    // var_dump($estado);
     $usrMod = Usuario::obtenerUsuario($id);
     if ($usrMod !== NULL && $id !== NULL && $usuario !== NULL && $clave !== NULL && $sector !== NULL && $estado !== NULL) {
       $usrMod->usuario = $usuario;
@@ -88,6 +84,23 @@ class UsuarioController extends Usuario implements IApiUsable
 
     $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
 
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function LogIn($request, $response){
+    $parametros = $request->getParsedBody();
+    $usuario = $parametros["usuario"];
+    $clave = $parametros["clave"];
+    $usr = Usuario::obtenerUsuarioPorUsuarioYClave($usuario, $clave);
+    if($usr){
+      $data = array('usuario' => $usr->usuario, 'cargo' => $usr->cargo);
+      $token = AutentificadorJWT::CrearToken($data);
+      $payload = json_encode(array("jwt" => $token));
+    }else{
+      $payload = json_encode(array("mensaje" => "ERROR: Usuario y/o Contraseña incorrecta"));
+    }
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');

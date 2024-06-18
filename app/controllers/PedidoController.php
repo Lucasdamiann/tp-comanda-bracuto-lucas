@@ -1,6 +1,5 @@
 <?php
 require_once './models/Pedido.php';
-require_once './archivos/FotoPedido.php';
 require_once './interfaces/IApiUsable.php';
 
 class PedidoController extends Pedido implements IApiUsable
@@ -9,11 +8,9 @@ class PedidoController extends Pedido implements IApiUsable
   {
     $parametros = $request->getParsedBody();
     $cliente = $parametros['cliente'];
-    $idProducto = $parametros['idProducto'];
     $idMesa = $parametros['idMesa'];
     $ped = new Pedido();
     $ped->cliente = $cliente;
-    $ped->idProducto = $idProducto;
     $ped->idMesa = $idMesa;
     $ped->id = $ped->crearPedido();
     $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
@@ -27,6 +24,18 @@ class PedidoController extends Pedido implements IApiUsable
     $ped = $args['id'];
     $pedido = Pedido::obtenerPedido($ped);
     $payload = json_encode($pedido);
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function TraerNumeroPedido($request, $response, $args)
+  {
+    $parametros = $request->getQueryParams();
+    $cliente = $parametros['cliente'];
+    $idMesa = $parametros['idMesa'];
+    $pedido = Pedido::obtenerNumeroPedidoPorClienteYMesa($cliente, $idMesa);
+    $payload = json_encode(array("mensaje" => "El numero de Pedido es: " . $pedido));
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -47,11 +56,10 @@ class PedidoController extends Pedido implements IApiUsable
     $parametros = $request->getParsedBody();
     $cliente = $parametros['cliente'];
     $numeroPedido = $parametros['numeroPedido'];
-    $idProducto = $parametros['idProducto'];
     $idMesa = $parametros['idMesa'];
     $estado = $parametros['estado'];
     $pedidoMod = Pedido::obtenerPedido($id);
-    if($pedidoMod !== NULL && $cliente !== NULL && $estado !== NULL && $numeroPedido !== NULL && $idProducto !==NULL && $idMesa !== NULL && $id !== NULL){
+    if($pedidoMod !== NULL && $cliente !== NULL && $estado !== NULL && $numeroPedido !== NULL && $idMesa !== NULL && $id !== NULL){
       $pedidoMod->cliente = $cliente;
       $pedidoMod->estado = $estado;
       $pedidoMod->numeroPedido = $numeroPedido;

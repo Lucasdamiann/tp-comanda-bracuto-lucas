@@ -6,7 +6,6 @@ class Pedido
     public $numeroPedido;
     public $idMesa;
     public $estado;
-    public $foto;
     public $fechaBaja;
 
     public function crearPedido()
@@ -80,5 +79,17 @@ class Pedido
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':foto', $foto, PDO::PARAM_INT);
         $consulta->execute();
+    }
+
+    public static function obtenerNumeroPedidoPorClienteYMesa($cliente, $idMesa)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("SELECT numeroPedido FROM pedidos WHERE cliente = :cliente AND idMesa = :idMesa");
+        $consulta->bindValue(':cliente', $cliente, PDO::PARAM_STR);
+        $consulta->bindValue(':idMesa', $idMesa, PDO::PARAM_INT);
+        $consulta->execute();
+        $resultado = $consulta->fetchObject('Pedido');
+
+        return $resultado->numeroPedido;
     }
 }

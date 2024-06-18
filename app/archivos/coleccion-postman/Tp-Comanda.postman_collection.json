@@ -10,32 +10,6 @@
 			"name": "Usuarios",
 			"item": [
 				{
-					"name": "ObtenerUsuario",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "localhost:912/Usuario/3",
-							"host": [
-								"localhost"
-							],
-							"port": "912",
-							"path": [
-								"Usuario",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "AltaUsuario",
 					"request": {
 						"method": "POST",
@@ -45,12 +19,12 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "Zeus",
+									"value": "test",
 									"type": "text"
 								},
 								{
 									"key": "clave",
-									"value": "ZZeus123",
+									"value": "123",
 									"type": "text"
 								},
 								{
@@ -85,6 +59,49 @@
 					"response": []
 				},
 				{
+					"name": "LogInUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "user",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "cargo",
+									"value": "mozo",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "DeleteUsuario",
 					"request": {
 						"method": "DELETE",
@@ -107,6 +124,54 @@
 								{
 									"key": "",
 									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerUsuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg1MTc1OTYsImV4cCI6MTcxODU3NzU5NiwiYXVkIjoiMDk3MjE1NmU2Zjc3ZDZhM2EyMTRkNzZkZDQwMjY3MTg0M2UyYWY3YiIsImRhdGEiOnsidXN1YXJpbyI6InRlc3QiLCJjYXJnbyI6Im1vem8ifSwiYXBwIjoiTGEgQ29tYW5kYSBkZSBCcmFjdXRvIn0.qx5kywgu0hmwzpyKS-8RonFyNu4bbQJJAuUIemA8LCc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/21",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								"21"
+							],
+							"query": [
+								{
+									"key": "usuario",
+									"value": "user",
+									"disabled": true
+								},
+								{
+									"key": "clave",
+									"value": "123",
 									"disabled": true
 								}
 							]
@@ -150,28 +215,28 @@
 							"urlencoded": [
 								{
 									"key": "usuario",
-									"value": "test",
+									"value": "Arnaldo",
 									"type": "text"
 								},
 								{
 									"key": "clave",
-									"value": "asdas123",
+									"value": "burrito123",
 									"type": "text"
 								},
 								{
 									"key": "sector",
-									"value": "testing",
+									"value": "cocina",
 									"type": "text"
 								},
 								{
 									"key": "estado",
-									"value": "unido",
+									"value": "activo",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:912/Usuario/11",
+							"raw": "localhost:912/Usuario/11?credenciales=admin",
 							"host": [
 								"localhost"
 							],
@@ -179,6 +244,12 @@
 							"path": [
 								"Usuario",
 								"11"
+							],
+							"query": [
+								{
+									"key": "credenciales",
+									"value": "admin"
+								}
 							]
 						}
 					},
@@ -449,6 +520,53 @@
 							"path": [
 								"Pedido",
 								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerNumeroPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg1NjAyMjgsImV4cCI6MTcxODYyMDIyOCwiYXVkIjoiMDk3MjE1NmU2Zjc3ZDZhM2EyMTRkNzZkZDQwMjY3MTg0M2UyYWY3YiIsImRhdGEiOnsidXN1YXJpbyI6InRlc3QiLCJjYXJnbyI6Im1vem8ifSwiYXBwIjoiTGEgQ29tYW5kYSBkZSBCcmFjdXRvIn0.orQbNynUCpjZwoYdHZcN0VSihsmhmX9vKH2pU6bgCKk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/numero/?cliente=mimi&idMesa=12",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"numero",
+								""
+							],
+							"query": [
+								{
+									"key": "cliente",
+									"value": "mimi"
+								},
+								{
+									"key": "idMesa",
+									"value": "12"
+								}
 							]
 						}
 					},
@@ -887,6 +1005,81 @@
 							"path": [
 								"Producto",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "ExportarCSV",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "categoria",
+									"value": "Pedido",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/auth/exportar",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"auth",
+								"exportar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ImportarCSV",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "categoria",
+									"value": "Pedido",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/auth/exportar?tabla=pedidos",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"auth",
+								"exportar"
+							],
+							"query": [
+								{
+									"key": "tabla",
+									"value": "pedidos"
+								}
 							]
 						}
 					},

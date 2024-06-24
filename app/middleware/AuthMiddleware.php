@@ -30,8 +30,7 @@ class AuthMiddleware
             $response = $handler->handle($request);
         } catch (Exception $e) {
             $response = new Response();
-            $payload = json_encode(array('mensaje' => 'ERROR: Hubo un error con el TO
-            KEN'));
+            $payload = json_encode(array('mensaje' => 'ERROR: Hubo un error con el TOKEN'));
             $response->getBody()->write($payload);
         }
         return $response->withHeader('Content-Type', 'application/json');
@@ -96,7 +95,7 @@ class AuthMiddleware
 
         try {
             $data = AutentificadorJWT::ObtenerData($token);
-            if ($data->cargo === "socio" || $data->cargo === $cargo) {
+            if ($data->cargo === "socio" || $data->cargo === $cargo || $data->cargo === "administrador") {
                 $response = $handler->handle($request);
             } else {
                 $response = new Response();
@@ -123,7 +122,7 @@ class AuthMiddleware
 
         try {
             $data = AutentificadorJWT::ObtenerData($token);
-            if ($data->cargo === "socio" || $data->cargo === $cargo) {
+            if ($data->cargo === "socio" || $data->cargo === $cargo || $data->cargo === "administrador") {
                 $response = $handler->handle($request);
             } else {
                 $response = new Response();
@@ -150,7 +149,7 @@ class AuthMiddleware
 
         try {
             $data = AutentificadorJWT::ObtenerData($token);
-            if ($data->cargo === "socio" || $data->cargo === $cargo) {
+            if ($data->cargo === "socio" || $data->cargo === $cargo || $data->cargo === "administrador") {
                 $response = $handler->handle($request);
             } else {
                 $response = new Response();
@@ -164,4 +163,59 @@ class AuthMiddleware
         }
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public static function verificarPerfilSocio(Request $request, RequestHandler $handler): Response
+    {
+        $cargo = "socio";
+        $header = $request->getHeaderLine('Authorization');
+        if ($header) {
+            $token = trim(explode("Bearer", $header)[1]);
+        } else {
+            $token = "";
+        }
+
+        try {
+            $data = AutentificadorJWT::ObtenerData($token);
+            if ($data->cargo === "administrador" || $data->cargo === $cargo) {
+                $response = $handler->handle($request);
+            } else {
+                $response = new Response();
+                $payload = json_encode(array('mensaje' => 'ERROR: No sos ' . $cargo));
+                $response->getBody()->write($payload);
+            }
+        } catch (Exception $e) {
+            $response = new Response();
+            $payload = json_encode(array('mensaje' => 'ERROR: Hubo un error con el TOKEN'));
+            $response->getBody()->write($payload);
+        }
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function verificarPerfilAdmin(Request $request, RequestHandler $handler): Response
+    {
+        $cargo = "administrador";
+        $header = $request->getHeaderLine('Authorization');
+        if ($header) {
+            $token = trim(explode("Bearer", $header)[1]);
+        } else {
+            $token = "";
+        }
+
+        try {
+            $data = AutentificadorJWT::ObtenerData($token);
+            if ($data->cargo === $cargo) {
+                $response = $handler->handle($request);
+            } else {
+                $response = new Response();
+                $payload = json_encode(array('mensaje' => 'ERROR: No sos ' . $cargo));
+                $response->getBody()->write($payload);
+            }
+        } catch (Exception $e) {
+            $response = new Response();
+            $payload = json_encode(array('mensaje' => 'ERROR: Hubo un error con el TOKEN'));
+            $response->getBody()->write($payload);
+        }
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
 }

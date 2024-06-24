@@ -10,12 +10,14 @@ class Pedido
 
     public function crearPedido()
     {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (cliente, numeroPedido, idMesa) VALUES (:cliente, :numeroPedido, :idMesa)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (cliente, numeroPedido, idMesa, fechaCreacion) VALUES (:cliente, :numeroPedido, :idMesa, :fechaCreacion)");
         $numero = self::GenerarCodigoAlfanumericoAleatorio();
         $consulta->bindValue(':cliente', $this->cliente, PDO::PARAM_STR);
         $consulta->bindValue(':numeroPedido', $numero, PDO::PARAM_STR);
         $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
+        $consulta->bindValue(':fechaCreacion', date("Y-m-d H:i:s"), PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -91,5 +93,35 @@ class Pedido
         $resultado = $consulta->fetchObject('Pedido');
 
         return $resultado->numeroPedido;
+    }
+
+    public static function obtenerTiempoRestante($codigoMesa, $numeroPedido)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT idEmpleado, tiempoEstimado FROM productos_pedidos INNER JOIN pedidos ON productos_pedidos.idPedido = pedidos.id AND pedidos.numeroPedido = :numeroPedido INNER JOIN mesas ON pedidos.idMesa = mesas.id AND mesas.codigoMesa = :codigoMesa");
+        $consulta->bindValue(':numeroPedido', $numeroPedido, PDO::PARAM_STR);
+        $consulta->bindValue(':codigoMesa', $codigoMesa, PDO::PARAM_STR);
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function obtenerTodosListosParaServir()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, cliente, numeroPedido, idMesa, estado FROM pedidos WHERE estado = 'listo para servir'");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+    }
+
+    public static function obtenerMontoPedido($id)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT pedidos.cliente, SUM(productos.precio) AS PRECIO FROM productos INNER JOIN productos_pedidos ON productos.id = productos_pedidos.idProducto INNER JOIN pedidos ON pedidos.id = productos_pedidos.idPedido WHERE pedidos.id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetchObject();
     }
 }

@@ -28,9 +28,15 @@ class FilesManager
         $resultado = $clase::obtenerTodos();
         $file = $destino . $clase . '.csv';
         $array_string = self::retornarAtributos($resultado);
+        $numero = 0;
         if (!file_exists($destino)) {
             mkdir($destino, 0777, true);
         }
+        do {
+            $numero++;
+            $file = $destino . pathinfo($clase, PATHINFO_FILENAME) . "($numero)." . pathinfo($clase, PATHINFO_EXTENSION);;
+        } while (file_exists($file));
+
         if (($pFile = fopen($file, "a")) != FALSE) {
             foreach ($array_string as $array) {
                 fputcsv($pFile, $array);
@@ -39,14 +45,26 @@ class FilesManager
         }
     }
 
-    public static function GuardarEnDB($data, $tabla)
+    public static function GuardarEnDB($data)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $placeholders = implode(',', array_fill(0, count($data), '?'));
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos VALUES ($placeholders)");
-        $consulta->bind_param(str_repeat('s', count($data)), ...$data);
-        $consulta->bindValue(':tabla', $tabla, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE productos SET tipo = :tipo, sector = :sector, precio = :precio, estado = :estado WHERE id = :id");
+        $consulta->bindValue(':id', $data[0], PDO::PARAM_INT);
+        $consulta->bindValue(':tipo', $data[1], PDO::PARAM_STR);
+        $consulta->bindValue(':sector', $data[2], PDO::PARAM_STR);
+        $consulta->bindValue(':precio', $data[3], PDO::PARAM_INT);
+        $consulta->bindValue(':estado', $data[4], PDO::PARAM_STR);
         $consulta->execute();
+        if ($consulta->rowCount() === 0) {
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO productos (id, tipo, sector, precio, estado) VALUES (:id, :tipo, :sector, :precio, :estado)");
+            $consulta->bindValue(':id', $data[0], PDO::PARAM_INT);
+            $consulta->bindValue(':tipo', $data[1], PDO::PARAM_STR);
+            $consulta->bindValue(':sector', $data[2], PDO::PARAM_STR);
+            $consulta->bindValue(':precio', $data[3], PDO::PARAM_INT);
+            $consulta->bindValue(':estado', $data[4], PDO::PARAM_STR);
+            $consulta->execute();
+        }
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
     }
 
     private static function retornarAtributos($objetos)

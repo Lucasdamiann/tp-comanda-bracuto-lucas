@@ -1,6 +1,7 @@
 <?php
 
 require_once './models/Usuario.php';
+require_once './models/Historial.php';
 require_once './interfaces/IApiUsable.php';
 
 class UsuarioController extends Usuario implements IApiUsable
@@ -89,11 +90,25 @@ class UsuarioController extends Usuario implements IApiUsable
       ->withHeader('Content-Type', 'application/json');
   }
 
-  public function LogIn($request, $response){
+  public function SuspenderUno($request, $response, $args)
+  {
+    $id = $args['id'];
+    $usuario = Usuario::obtenerUsuario($id);
+    $usuario->estado = "suspendido";
+    Usuario::suspenderUsuario($usuario);
+    $payload = json_encode(array("mensaje" => "Usuario suspendido con exito"));
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function LogIn($request, $response, $args){
     $parametros = $request->getParsedBody();
     $usuario = $parametros["usuario"];
     $clave = $parametros["clave"];
     $usr = Usuario::obtenerUsuarioPorUsuarioYClave($usuario, $clave);
+    Historial::crearRegistroHistorial($usr);
     if($usr){
       $data = array('usuario' => $usr->usuario, 'cargo' => $usr->cargo);
       $token = AutentificadorJWT::CrearToken($data);
@@ -101,6 +116,18 @@ class UsuarioController extends Usuario implements IApiUsable
     }else{
       $payload = json_encode(array("mensaje" => "ERROR: Usuario y/o Contraseña incorrecta"));
     }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function ConsultarIngresos($request, $response, $args){
+    $parametros = $request->getQueryParams();
+
+    $fechaInicial = $parametros['fechaInicial'];
+    $fechaFinal = $parametros['fechaFinal'];
+    $historial = Historial::obtenerTodosEntreFechas($fechaInicial,$fechaFinal);
+    $payload = json_encode(array("Historial entre $fechaInicial y $fechaFinal" => $historial));
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');

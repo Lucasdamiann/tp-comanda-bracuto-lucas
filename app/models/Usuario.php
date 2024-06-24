@@ -6,20 +6,20 @@ class Usuario
     public $clave;
     public $sector;
     public $cargo;
-    public $fechaLogIn;
+    public $fechaCreacion;
     public $estado;
     public $fechaBaja;
 
     public function crearUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, sector, cargo, fechaLogIn, estado) VALUES (:usuario, :clave, :sector, :cargo, :fechaLogIn, :estado)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, sector, cargo, fechaCreacion, estado) VALUES (:usuario, :clave, :sector, :cargo, :fechaCreacion, :estado)");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $clave = password_hash($this->clave, PASSWORD_DEFAULT);
         $consulta->bindValue(':clave', $clave);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
         $consulta->bindValue(':cargo', $this->cargo, PDO::PARAM_STR);
-        $consulta->bindValue(':fechaLogIn', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+        $consulta->bindValue(':fechaCreacion', date("Y-m-d H:i:s"), PDO::PARAM_STR);
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->execute();
 
@@ -29,7 +29,7 @@ class Usuario
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaLogIn, estado FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaCreacion, estado FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
@@ -38,7 +38,7 @@ class Usuario
     public static function obtenerUsuario($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaLogIn, estado FROM usuarios WHERE id = :id");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaCreacion, estado FROM usuarios WHERE id = :id");
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
 
@@ -68,12 +68,21 @@ class Usuario
         $consulta->execute();
     }
 
+    public static function suspenderUsuario($usuario)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET estado = :estado WHERE id = :id");
+        $consulta->bindValue(':id', $usuario->id, PDO::PARAM_INT);
+        $consulta->bindValue(':estado', $usuario->estado, PDO::PARAM_STR);
+        $consulta->execute();
+    }
+
     public static function obtenerUsuarioPorUsuarioYClave($usuario, $clave)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $claveHash = self::obtenerClavePorUsuario($usuario);
         if($claveHash && password_verify($clave, $claveHash)){
-            $consulta = $objAccesoDato->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaLogIn, estado FROM usuarios WHERE usuario = :usuario");
+            $consulta = $objAccesoDato->prepararConsulta("SELECT id, usuario, clave, sector, cargo, fechaCreacion, estado FROM usuarios WHERE usuario = :usuario");
             $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
             $consulta->execute();
             return $consulta->fetchObject('Usuario');

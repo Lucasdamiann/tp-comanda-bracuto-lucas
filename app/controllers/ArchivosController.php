@@ -1,6 +1,7 @@
 <?php
 
 require_once './archivos/FilesManager.php';
+require_once './archivos/PDFManager.php';
 
 class ArchivosController
 {
@@ -24,42 +25,55 @@ class ArchivosController
 
   public function ImportarCSV($request, $response, $args)
   {
-    $parametros = $request->getParsedBody();
-    $tabla = $parametros["tabla"];
-    if ($_FILES && is_uploaded_file($_FILES['file']['tmp_name'])) {
+    if ($_FILES && is_uploaded_file($_FILES['archivo']['tmp_name'])) {
       $destino = "archivos/importadosCSV/";
-      $nombreArchivo = $_FILES['file']['name'];
-      $archivoTemp = $_FILES['file']['tmp_name'];
-
-      // Mover el archivo temporal al destino final
+      $nombreArchivo = $_FILES['archivo']['name'];
+      $archivoTemp = $_FILES['archivo']['tmp_name'];
       $rutaArchivo = $destino . $nombreArchivo;
       if (!file_exists($destino)) {
         mkdir($destino, 0777, true);
       }
+      $numero = 0;
+      while (file_exists($rutaArchivo)) {
+        $numero++;
+        $rutaArchivo = $destino . pathinfo($nombreArchivo, PATHINFO_FILENAME) . "($numero)." . pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+      }
       if (move_uploaded_file($archivoTemp, $rutaArchivo)) {
-        echo "Archivo subido correctamente.";
-
-        // Procesar el archivo CSV y guardar en la base de datos
         if (($pFile = fopen($rutaArchivo, "r")) !== FALSE) {
           while (($data = fgetcsv($pFile, 1000, ",")) !== FALSE) {
-            // Aquí deberías procesar cada línea del CSV y guardar en la base de datos
-            // Suponiendo que tienes una función para procesar cada línea
-            // Ejemplo: procesarLineaCSV($data);
-            // Aquí deberías implementar la lógica para guardar en la base de datos
-            // $data contiene los valores de cada línea del CSV
-            FilesManager::GuardarEnDB($data, $tabla);
-            $payload = json_encode($data);
-            $response->getBody()->write($payload);
+            if (count($data) == 5) {
+              FilesManager::GuardarEnDB($data);
+            }
           }
           fclose($pFile);
+          $payload = json_encode(array("mensaje" => "Productos ingresados con exito"));
         } else {
-          echo "Error al abrir el archivo CSV.";
+          $payload = json_encode(array("mensaje" => "ERROR: No se pudo abrir el archivo CSV"));
         }
       } else {
-        echo "Error al subir el archivo.";
+        $payload = json_encode(array("mensaje" => "ERROR: No se pudo subir el archivo"));
       }
     } else {
-      echo "No se ha subido ningún archivo.";
+      $payload = json_encode(array("mensaje" => "Debe seleccionar un archivo para importar"));
     }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  function CrearPDF($request, $response, $args)
+  {
+    $pdf = new PDFManager();
+    $pdf->AliasNbPages();
+    $pdf->AddPage();
+    $pdf->SetFont('Times', '', 12);
+    $lista = Producto::obtenerTodos();
+    $pdf->mostrarDatos($lista);
+    $pdf->Output();
+    $pdfContent = $pdf->Output('S');
+    $rutaArchivo = 'archivos/exportadosPDF/productos.pdf';
+    file_put_contents($rutaArchivo, $pdfContent);
+
+    return $response;
   }
 }

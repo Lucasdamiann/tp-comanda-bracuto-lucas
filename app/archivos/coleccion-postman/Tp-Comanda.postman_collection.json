@@ -12,6 +12,16 @@
 				{
 					"name": "AltaUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -19,7 +29,7 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "test",
+									"value": "pipi",
 									"type": "text"
 								},
 								{
@@ -29,12 +39,12 @@
 								},
 								{
 									"key": "sector",
-									"value": "barra",
+									"value": "Cocina",
 									"type": "text"
 								},
 								{
 									"key": "cargo",
-									"value": "mozo",
+									"value": "Cocinero",
 									"type": "text"
 								},
 								{
@@ -59,51 +69,18 @@
 					"response": []
 				},
 				{
-					"name": "LogInUsuario",
+					"name": "DeleteUsuario",
 					"request": {
 						"auth": {
-							"type": "bearer"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "usuario",
-									"value": "user",
-									"type": "text"
-								},
-								{
-									"key": "clave",
-									"value": "123",
-									"type": "text"
-								},
-								{
-									"key": "cargo",
-									"value": "mozo",
-									"type": "text",
-									"disabled": true
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
 								}
 							]
 						},
-						"url": {
-							"raw": "localhost:912/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "912",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteUsuario",
-					"request": {
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -111,14 +88,14 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:912/Usuario/",
+							"raw": "localhost:912/Usuario/27",
 							"host": [
 								"localhost"
 							],
 							"port": "912",
 							"path": [
 								"Usuario",
-								""
+								"27"
 							],
 							"query": [
 								{
@@ -142,7 +119,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg1MTc1OTYsImV4cCI6MTcxODU3NzU5NiwiYXVkIjoiMDk3MjE1NmU2Zjc3ZDZhM2EyMTRkNzZkZDQwMjY3MTg0M2UyYWY3YiIsImRhdGEiOnsidXN1YXJpbyI6InRlc3QiLCJjYXJnbyI6Im1vem8ifSwiYXBwIjoiTGEgQ29tYW5kYSBkZSBCcmFjdXRvIn0.qx5kywgu0hmwzpyKS-8RonFyNu4bbQJJAuUIemA8LCc",
+									"value": "{{tokenSocio}}",
 									"type": "string"
 								}
 							]
@@ -154,14 +131,14 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:912/Usuario/21",
+							"raw": "localhost:912/Usuario/22",
 							"host": [
 								"localhost"
 							],
 							"port": "912",
 							"path": [
 								"Usuario",
-								"21"
+								"22"
 							],
 							"query": [
 								{
@@ -185,6 +162,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -208,6 +195,16 @@
 				{
 					"name": "ModificarUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -254,6 +251,61 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "SuspenderUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "Arnaldo",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "burrito123",
+									"type": "text"
+								},
+								{
+									"key": "sector",
+									"value": "cocina",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "activo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Usuario/suspender/27",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Usuario",
+								"suspender",
+								"27"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -263,6 +315,16 @@
 				{
 					"name": "AltaProducto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -302,6 +364,16 @@
 				{
 					"name": "DeleteProducto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -335,6 +407,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -361,6 +443,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -384,6 +476,16 @@
 				{
 					"name": "ModificarProducto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -392,27 +494,31 @@
 								{
 									"key": "tipo",
 									"value": "",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "sector",
 									"value": "",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "precio",
-									"value": "",
+									"value": "2100",
 									"type": "text"
 								},
 								{
 									"key": "estado",
 									"value": "",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "tiempoEstimado",
 									"value": "",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -438,6 +544,16 @@
 				{
 					"name": "AltaPedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -445,12 +561,12 @@
 							"formdata": [
 								{
 									"key": "cliente",
-									"value": "mimi",
+									"value": "Messi",
 									"type": "text"
 								},
 								{
 									"key": "idMesa",
-									"value": "9",
+									"value": "10",
 									"type": "text"
 								}
 							]
@@ -472,6 +588,16 @@
 				{
 					"name": "DeletePedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -505,6 +631,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -526,7 +662,7 @@
 					"response": []
 				},
 				{
-					"name": "ObtenerNumeroPedido",
+					"name": "ObtenerMontoPedido",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -536,7 +672,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg1NjAyMjgsImV4cCI6MTcxODYyMDIyOCwiYXVkIjoiMDk3MjE1NmU2Zjc3ZDZhM2EyMTRkNzZkZDQwMjY3MTg0M2UyYWY3YiIsImRhdGEiOnsidXN1YXJpbyI6InRlc3QiLCJjYXJnbyI6Im1vem8ifSwiYXBwIjoiTGEgQ29tYW5kYSBkZSBCcmFjdXRvIn0.orQbNynUCpjZwoYdHZcN0VSihsmhmX9vKH2pU6bgCKk",
+									"value": "{{tokenMozo}}",
 									"type": "string"
 								}
 							]
@@ -548,7 +684,44 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:912/Pedido/numero/?cliente=mimi&idMesa=12",
+							"raw": "localhost:912/Pedido/pagar/13",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"pagar",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerNumeroPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMoza}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/numero/?cliente=Messi&idMesa=10",
 							"host": [
 								"localhost"
 							],
@@ -561,11 +734,11 @@
 							"query": [
 								{
 									"key": "cliente",
-									"value": "mimi"
+									"value": "Messi"
 								},
 								{
 									"key": "idMesa",
-									"value": "12"
+									"value": "10"
 								}
 							]
 						}
@@ -573,11 +746,58 @@
 					"response": []
 				},
 				{
-					"name": "ObtenerTodosPedido",
+					"name": "ObtenerTodosPedidoConTiempoEstimado",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/todo/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"todo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodosPedidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -599,8 +819,54 @@
 					"response": []
 				},
 				{
+					"name": "ObtenerTodosPedidosListos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Pedido/listos",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Pedido",
+								"listos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ModificarPedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -650,6 +916,16 @@
 				{
 					"name": "AltaFotoPedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -658,12 +934,12 @@
 								{
 									"key": "foto",
 									"type": "file",
-									"src": "/G:/Lucas/images.png"
+									"src": "/C:/Users/Lucas/Pictures/images.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:912/Pedido/Foto/9",
+							"raw": "localhost:912/Pedido/Foto/13",
 							"host": [
 								"localhost"
 							],
@@ -671,7 +947,237 @@
 							"path": [
 								"Pedido",
 								"Foto",
-								"9"
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Encuesta",
+			"item": [
+				{
+					"name": "AltaEncuesta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoMesa",
+									"value": "M0001",
+									"type": "text"
+								},
+								{
+									"key": "numeroPedido",
+									"value": "KUZ46",
+									"type": "text"
+								},
+								{
+									"key": "mesa",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "restaurante",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "mozo",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "cocinero",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "resenia",
+									"value": "Eto etá petaculá, le encantó a Antonella y lo chico. Vamo Argentina",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Encuesta",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Encuesta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEncuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Encuesta/6",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Encuesta",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerEncuesta",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Encuesta/6",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Encuesta",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTodasEncuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Encuesta/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Encuesta",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEncuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "numeroPedido",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idMesa",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Encuesta/1",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Encuesta",
+								"1"
 							]
 						}
 					},
@@ -685,6 +1191,16 @@
 				{
 					"name": "AltaProductosPedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -692,12 +1208,12 @@
 							"formdata": [
 								{
 									"key": "idProducto",
-									"value": "2",
+									"value": "11",
 									"type": "text"
 								},
 								{
 									"key": "idPedido",
-									"value": "6",
+									"value": "13",
 									"type": "text"
 								}
 							]
@@ -740,11 +1256,21 @@
 					"response": []
 				},
 				{
-					"name": "ObtenerProductosPedido",
+					"name": "ObtenerProductosPedidoBarra",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenBartender}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -752,14 +1278,125 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:912/ProductosPedidos/1",
+							"raw": "localhost:912/ProductosPedidos/pendientes/barra",
 							"host": [
 								"localhost"
 							],
 							"port": "912",
 							"path": [
 								"ProductosPedidos",
-								"1"
+								"pendientes",
+								"barra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerProductosPedidoCocina",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenCocinero}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/pendientes/cocina",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"pendientes",
+								"cocina"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerProductosPedidoCerveceria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenCervecero}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/pendientes/cerveceria",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"pendientes",
+								"cerveceria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerProductosPedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg4NTk3NzcsImV4cCI6MTcxODkxOTc3NywiYXVkIjoiMDk3MjE1NmU2Zjc3ZDZhM2EyMTRkNzZkZDQwMjY3MTg0M2UyYWY3YiIsImRhdGEiOnsidXN1YXJpbyI6InRlc3RNb3pvIiwiY2FyZ28iOiJtb3pvIn0sImFwcCI6IkxhIENvbWFuZGEgZGUgQnJhY3V0byJ9.HnpIZvn6tw9Q0DlMf2TJ9_hCMa_N6kLdmyonfathY5k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"2"
 							]
 						}
 					},
@@ -771,6 +1408,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -800,12 +1447,7 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "cliente",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "numeroPedido",
+									"key": "idPedido",
 									"value": "",
 									"type": "text"
 								},
@@ -815,12 +1457,7 @@
 									"type": "text"
 								},
 								{
-									"key": "idMesa",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "estado",
+									"key": "idEmpleado",
 									"value": "",
 									"type": "text"
 								}
@@ -835,6 +1472,205 @@
 							"path": [
 								"ProductosPedidos",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarProductosPedidoCocina",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenCocinero3}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "estado",
+									"value": "en preparacion",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "listo para servir",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "cancelado",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "testCocin2",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/tomar/cocina/4",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"tomar",
+								"cocina",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarProductosPedidoBarra",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenBartender}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "estado",
+									"value": "en preparacion",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "listo para servir",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "testBar",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/tomar/barra/13",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"tomar",
+								"barra",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarProductosPedidoCerveceria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenCervecero}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "estado",
+									"value": "en preparacion",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "listo para servir",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "cancelado",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "testCerv",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/ProductosPedidos/tomar/cerveceria/8",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"ProductosPedidos",
+								"tomar",
+								"cerveceria",
+								"8"
 							]
 						}
 					},
@@ -855,7 +1691,7 @@
 							"formdata": [
 								{
 									"key": "estado",
-									"value": "cerrada",
+									"value": "libre",
 									"type": "text"
 								},
 								{
@@ -915,6 +1751,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -941,6 +1787,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1009,6 +1865,166 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ModificarEstadoEsperando",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idMesa",
+									"value": "18",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/esperando/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"esperando",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstadoComiendo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idMesa",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/comiendo/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"comiendo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstadoPagando",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenMozo}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idMesa",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/pagando/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"pagando",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstadoCerrada",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idMesa",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Mesa/cerrada/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Mesa",
+								"cerrada",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1019,7 +2035,14 @@
 					"name": "ExportarCSV",
 					"request": {
 						"auth": {
-							"type": "bearer"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -1028,19 +2051,19 @@
 							"formdata": [
 								{
 									"key": "categoria",
-									"value": "Pedido",
+									"value": "Producto",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:912/auth/exportar",
+							"raw": "localhost:912/Archivo/exportar",
 							"host": [
 								"localhost"
 							],
 							"port": "912",
 							"path": [
-								"auth",
+								"Archivo",
 								"exportar"
 							]
 						}
@@ -1051,6 +2074,84 @@
 					"name": "ImportarCSV",
 					"request": {
 						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tabla",
+									"value": "Producto",
+									"type": "text"
+								},
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/Users/Lucas/Desktop/productos.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:912/Archivo/importar",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Archivo",
+								"importar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearPDF",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenSocio}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Archivo/crearPDF",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Archivo",
+								"crearPDF"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LogIn",
+			"item": [
+				{
+					"name": "LogInUsuario",
+					"request": {
+						"auth": {
 							"type": "bearer"
 						},
 						"method": "POST",
@@ -1059,27 +2160,866 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "categoria",
-									"value": "Pedido",
+									"key": "usuario",
+									"value": "testCocin3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "testMoza",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "testBar",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "testCerv",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "testSocio",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "clave",
+									"value": "123",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "admin",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:912/auth/exportar?tabla=pedidos",
+							"raw": "localhost:912/Auth/login",
 							"host": [
 								"localhost"
 							],
 							"port": "912",
 							"path": [
-								"auth",
-								"exportar"
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consulta",
+			"item": [
+				{
+					"name": "ObtenerTiempoRestantePedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Consulta/tiemporestante/?codigoMesa=M0001&numeroPedido=KUZ46",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Consulta",
+								"tiemporestante",
+								""
 							],
 							"query": [
 								{
-									"key": "tabla",
-									"value": "pedidos"
+									"key": "codigoMesa",
+									"value": "M0001"
+								},
+								{
+									"key": "numeroPedido",
+									"value": "KUZ46"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Administrador",
+			"item": [
+				{
+					"name": "Historial",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/historial/?fechaInicial=2024-06-23 04:22:21&fechaFinal=2024-06-23 04:23:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"historial",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-06-23 04:22:21"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 04:23:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Operaciones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/operaciones/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"operaciones",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperacionesPorSector",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/operaciones/sector/?sector=Cocina&fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"operaciones",
+								"sector",
+								""
+							],
+							"query": [
+								{
+									"key": "sector",
+									"value": "Cocina"
+								},
+								{
+									"key": "sector",
+									"value": "Cerveceria",
+									"disabled": true
+								},
+								{
+									"key": "sector",
+									"value": "Barra",
+									"disabled": true
+								},
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperacionesPorSeperado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/operaciones/empleado/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"operaciones",
+								"empleado",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductoMasVendido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/productos/masvendido/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"productos",
+								"masvendido",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductoMenosVendido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/productos/menosvendido/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"productos",
+								"menosvendido",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductoFueraTiempo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/productos/fueratiempo/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"productos",
+								"fueratiempo",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductoCancelados",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:912/Administrador/productos/cancelados/?fechaInicial=2024-05-22 16:00:00&fechaFinal=2024-06-24 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"productos",
+								"cancelados",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-05-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-24 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMasUsada",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/masusada/?fechaInicial=2024-06-22 16:00:00&fechaFinal=2024-06-24 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"masusada",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-06-22 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-24 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMenosUsada",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/menosusada/?fechaInicial=2024-06-12 16:00:00&fechaFinal=2024-06-24 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"menosusada",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-06-12 16:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-24 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMasFacturo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/masfacturo/?fechaInicial=2024-02-20 15:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"masfacturo",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-02-20 15:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMenosFacturo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/menosfacturo/?fechaInicial=2024-04-20 15:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"menosfacturo",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-04-20 15:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMayorFactura",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/mayorfactura/?fechaInicial=2024-04-20 15:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"mayorfactura",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-04-20 15:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaMenorFactura",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/menorfactura/?fechaInicial=2024-04-20 15:00:00&fechaFinal=2024-06-23 16:00:00",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"menorfactura",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-04-20 15:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-23 16:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMesaFacturaEntreFechas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mesas/fechas/?fechaInicial=2024-04-20 15:00:00&fechaFinal=2024-06-24 16:00:00&id=12",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mesas",
+								"fechas",
+								""
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-04-20 15:00:00"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-24 16:00:00"
+								},
+								{
+									"key": "id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerMejoresEncuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/mejorcomentario/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"mejorcomentario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerPeoresEncuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:912/Administrador/peorcomentario/",
+							"host": [
+								"localhost"
+							],
+							"port": "912",
+							"path": [
+								"Administrador",
+								"peorcomentario",
+								""
 							]
 						}
 					},

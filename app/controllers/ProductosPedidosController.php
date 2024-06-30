@@ -100,9 +100,9 @@ class ProductosPedidosController extends ProductosPedidos implements IApiUsable
     $tiempoEstimado = $parametros['tiempoEstimado'];
     $usuario = $parametros['usuario'];
     $clave = $parametros['clave'];
-    $prodPedido = ProductosPedidos::obtenerProductosPedidos($id);
-    if ($prodPedido !== NULL && $estado !== NULL && $id !== NULL && $tiempoEstimado !== NULL && $usuario !== NULL && $clave !== NULL) {
-      $usuarioObt = Usuario::obtenerUsuarioPorUsuarioYClave($usuario, $clave);
+    $usuarioObt = Usuario::obtenerUsuarioPorUsuarioYClave($usuario, $clave);
+    $prodPedido = ProductosPedidos::obtenerProductosPedidosConSectorPorId($id, $usuarioObt);
+    if ($prodPedido) {
       if ($estado === 'en preparacion') {
         $prodPedido->estado = $estado;
         $prodPedido->tiempoEstimado = $tiempoEstimado;
@@ -124,7 +124,7 @@ class ProductosPedidosController extends ProductosPedidos implements IApiUsable
         $payload = json_encode(array("mensaje" => "ERROR: Datos del usuario incorrectos"));
       }
     } else {
-      $payload = json_encode(array("mensaje" => "ERROR: No se pudo modificar ProductosPedidos"));
+      $payload = json_encode(array("mensaje" => "ERROR: No puede modificar ProductosPedidos de otro sector"));
     }
     $response->getBody()->write($payload);
     return $response

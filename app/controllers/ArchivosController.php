@@ -43,10 +43,12 @@ class ArchivosController
           while (($data = fgetcsv($pFile, 1000, ",")) !== FALSE) {
             if (count($data) == 5) {
               FilesManager::GuardarEnDB($data);
+              $payload = json_encode(array("mensaje" => "Productos ingresados con exito"));
+            }else{
+              $payload = json_encode(array("mensaje" => "ERROR: Revisar la cantidad de elementos a agregar"));              
             }
           }
           fclose($pFile);
-          $payload = json_encode(array("mensaje" => "Productos ingresados con exito"));
         } else {
           $payload = json_encode(array("mensaje" => "ERROR: No se pudo abrir el archivo CSV"));
         }

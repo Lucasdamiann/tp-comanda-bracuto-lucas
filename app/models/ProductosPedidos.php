@@ -52,6 +52,18 @@ class ProductosPedidos
         return $consulta->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public static function obtenerProductosPedidosConSectorPorId($id,$usuario)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT productos_pedidos.id, productos_pedidos.idPedido, productos_pedidos.idEmpleado, productos_pedidos.idProducto, productos.sector, productos_pedidos.estado, productos_pedidos.tiempoEstimado, productos_pedidos.fechaTomado, productos_pedidos.fechaEntregado FROM productos_pedidos JOIN productos ON productos.id = productos_pedidos.idProducto JOIN usuarios ON productos.sector = usuarios.sector WHERE productos.sector = :sector AND productos_pedidos.id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->bindValue(':sector', $usuario->sector, PDO::PARAM_STR);
+
+        $consulta->execute();
+
+        return $consulta->fetchObject();
+    }
+
     public static function modificarProductosPedidos($pedido)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();

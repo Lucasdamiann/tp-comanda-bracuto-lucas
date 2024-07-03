@@ -26,10 +26,10 @@ class ProductosPedidos
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, idPedido, idProducto, idEmpleado FROM productos_pedidos");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, idPedido, idProducto, idEmpleado, estado FROM productos_pedidos");
         $consulta->execute();
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'ProductosPedidos');
+        return $consulta->fetchAll(PDO::FETCH_CLASS);
     }
 
     public static function obtenerProductosPedidos($id)
